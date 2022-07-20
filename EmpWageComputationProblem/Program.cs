@@ -1,5 +1,5 @@
-const int IS_PART_TIME = 1; //value 1 is assign to IS_FULL_TIME variable
-const int IS_FULL_TIME = 2; //value 2 is assign to IS_PART_TIME variable
+const int IS_PART_TIME = 1; //value 1 is assign to IS_PART_TIME variable
+const int IS_FULL_TIME = 2; //value 2 is assign to IS_FULL_TIME variable
 const int NUM_OF_WORKING_DAYS = 20; // value 20 is assign to NUM_OF_WORKING_DAYS
 const int EMP_RATE_PER_HOUR = 20; // value 20 is assign to EMP_RATE_PER_HOUR
 int empHrs = 0; //initalizing the empHrs to 0
