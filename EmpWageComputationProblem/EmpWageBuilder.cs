@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using EmpWageComputationProblem;
 namespace EmpWageComputationProblem
 {
-    internal class EmpWageBuilder
+    internal class EmpWageBuilder : IComputeEmpWage
     {
         const int IS_PART_TIME = 1; //declared and value 1 is assign to IS_PART_TIME variable
         const int IS_FULL_TIME = 2; //declared and value 2 is assign to IS_FULL_TIME variable
