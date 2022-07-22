@@ -11,26 +11,25 @@ namespace EmpWageComputationProblem
         const int IS_PART_TIME = 1; //declared and value 1 is assign to IS_PART_TIME variable
         const int IS_FULL_TIME = 2; //declared and value 2 is assign to IS_FULL_TIME variable
 
-        private int numOfCompany = 0;
-        private CompanyEmpWage[] companyEmpWage;// declaring a array of CompanyEmpWage
+         private LinkedList<CompanyEmpWage> companyEmpWageList;
 
         public EmpWageBuilder()
         {
-            this.companyEmpWage = new CompanyEmpWage[3]; // assigned the arraysize to CompanyEmpWage array 
+            this.companyEmpWageList = new LinkedList<CompanyEmpWage>(); // Linkedlist object is created of type CompanyEmpWage 
         }
         //addCompanyEmpWage method receive values for different parameters when method is called from Program.cs
         public void addCompanyEmpWage(string company, int empRatePerHour, int numOfWorkingDays, int maxHoursPerMonth)
         {
             //storing the received values of multiple parameters of multiple companies in companyEmpWage array
-            companyEmpWage[this.numOfCompany] = new CompanyEmpWage(company, empRatePerHour, numOfWorkingDays, maxHoursPerMonth);
-            numOfCompany++;
+            CompanyEmpWage companyEmpWage = new CompanyEmpWage(company, empRatePerHour, numOfWorkingDays, maxHoursPerMonth);
+            this.companyEmpWageList.AddLast(companyEmpWage); // adding the values at last node in linked list
         }
         public void computeEmpWage() //this method is used to call setTotalEmpWage method to store the value of totalEmpWage of multiple company
         {
-            for(int i = 0; i < numOfCompany; i++)//for loop is used to store the calculated value for multiple companies
+            foreach (CompanyEmpWage companyEmpWage in this.companyEmpWageList) //using foreach loop to for accessing values one by one
             {
-                companyEmpWage[i].setTotalEmpWage(this.computeEmpWage(this.companyEmpWage[i])); //inside setTotalEmpWage method, the computeEmpWage method is called
-                Console.WriteLine(this.companyEmpWage[i].toString());// calls toString method for each company to display totalEmpWage
+                companyEmpWage.setTotalEmpWage(this.computeEmpWage(companyEmpWage));//inside setTotalEmpWage method, the computeEmpWage method is called
+                Console.WriteLine(companyEmpWage.toString());// calls toString method for each company to display totalEmpWage
             }
         }
         private int computeEmpWage(CompanyEmpWage companyEmpWage) // this method is used to calulate the total Emp Wage
@@ -63,3 +62,4 @@ namespace EmpWageComputationProblem
         
     }
 }
+
