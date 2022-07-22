@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using EmpWageComputationProblem;
 namespace EmpWageComputationProblem
 {
     internal class EmpWageBuilder
@@ -11,25 +11,34 @@ namespace EmpWageComputationProblem
         const int IS_PART_TIME = 1; //declared and value 1 is assign to IS_PART_TIME variable
         const int IS_FULL_TIME = 2; //declared and value 2 is assign to IS_FULL_TIME variable
 
-        private string company;
-        private int empRatePerHour;
-        private int numOfWorkingDays;
-        private int maxHoursPerMonth;
-        private int totalEmpWage;
+        private int numOfCompany = 0;
+        private CompanyEmpWage[] companyEmpWage;// declaring a array of CompanyEmpWage
 
-        public EmpWageBuilder(string company, int empRatePerHour, int numOfWorkingDays, int maxHoursPerMonth) // constructor is used to assign values
+        public EmpWageBuilder()
         {
-            this.company = company;
-            this.empRatePerHour = empRatePerHour;
-            this.numOfWorkingDays = numOfWorkingDays;
-            this.maxHoursPerMonth = maxHoursPerMonth;
+            this.companyEmpWage = new CompanyEmpWage[3]; // assigned the arraysize to CompanyEmpWage array 
         }
-        public void calculateEmpWage() // this method is used to calulate the total Emp Wage
+        //addCompanyEmpWage method receive values for different parameters when method is called from Program.cs
+        public void addCompanyEmpWage(string company, int empRatePerHour, int numOfWorkingDays, int maxHoursPerMonth)
+        {
+            //storing the received values of multiple parameters of multiple companies in companyEmpWage array
+            companyEmpWage[this.numOfCompany] = new CompanyEmpWage(company, empRatePerHour, numOfWorkingDays, maxHoursPerMonth);
+            numOfCompany++;
+        }
+        public void computeEmpWage() //this method is used to call setTotalEmpWage method to store the value of totalEmpWage of multiple company
+        {
+            for(int i = 0; i < numOfCompany; i++)//for loop is used to store the calculated value for multiple companies
+            {
+                companyEmpWage[i].setTotalEmpWage(this.computeEmpWage(this.companyEmpWage[i])); //inside setTotalEmpWage method, the computeEmpWage method is called
+                Console.WriteLine(this.companyEmpWage[i].toString());// calls toString method for each company to display totalEmpWage
+            }
+        }
+        private int computeEmpWage(CompanyEmpWage companyEmpWage) // this method is used to calulate the total Emp Wage
         {
             int empHrs; 
             int totalEmpHrs = 0; 
             int totalWorkingDays = 0; 
-            while (totalEmpHrs <= this.maxHoursPerMonth && totalWorkingDays < this.numOfWorkingDays) //through while loop we are calculating daily empWage till the condition is true
+            while (totalEmpHrs <= companyEmpWage.maxHoursPerMonth && totalWorkingDays < companyEmpWage.numOfWorkingDays) //through while loop we are calculating daily empWage till the condition is true
             {
                 totalWorkingDays++; // incrementing the totalWorkingDays variable by one
                 Random random = new Random(); // creating the Random class object
@@ -49,11 +58,8 @@ namespace EmpWageComputationProblem
                 totalEmpHrs += empHrs; // adding the empHrs to get the totalEmpHrs 
                 Console.WriteLine("Day: " + totalWorkingDays + " Emp Hrs: " + empHrs); //displaying for which day how many empHrs were there
             }
-            totalEmpWage = totalEmpHrs * this.empRatePerHour; // with this formula we get the totalEmpWage 
+            return totalEmpHrs * companyEmpWage.empRatePerHour; // with this formula we get the totalEmpWage 
         }
-        public string toString() // this method is used the display the totalempwage for each company 
-        {
-            return "Total Emp Wage for Company: " + this.company + " is: " + this.totalEmpWage;
-        }
+        
     }
 }
