@@ -36,7 +36,8 @@ namespace EmpWageComputationProblem
         {
             int empHrs; 
             int totalEmpHrs = 0; 
-            int totalWorkingDays = 0; 
+            int totalWorkingDays = 0;
+            int empWage = 0, totalEmpWage = 0 ;
             while (totalEmpHrs <= companyEmpWage.maxHoursPerMonth && totalWorkingDays < companyEmpWage.numOfWorkingDays) //through while loop we are calculating daily empWage till the condition is true
             {
                 totalWorkingDays++; // incrementing the totalWorkingDays variable by one
@@ -54,10 +55,11 @@ namespace EmpWageComputationProblem
                         empHrs = 0;
                         break;
                 }
-                totalEmpHrs += empHrs; // adding the empHrs to get the totalEmpHrs 
-                Console.WriteLine("Day: " + totalWorkingDays + " Emp Hrs: " + empHrs); //displaying for which day how many empHrs were there
+                empWage = empHrs * companyEmpWage.empRatePerHour; // calculating daily wage
+                totalEmpWage += empWage; // adding the daily empWage to get the totalEmpWage
+                Console.WriteLine("Day: " + totalWorkingDays + " Emp Hrs: " + empHrs+ " Emp Wage: "+empWage); 
             }
-            return totalEmpHrs * companyEmpWage.empRatePerHour; // with this formula we get the totalEmpWage 
+            return totalEmpWage;  
         }
         
     }
