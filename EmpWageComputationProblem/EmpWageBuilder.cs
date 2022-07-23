@@ -11,11 +11,13 @@ namespace EmpWageComputationProblem
         const int IS_PART_TIME = 1; //declared and value 1 is assign to IS_PART_TIME variable
         const int IS_FULL_TIME = 2; //declared and value 2 is assign to IS_FULL_TIME variable
 
-         private LinkedList<CompanyEmpWage> companyEmpWageList;
+        private LinkedList<CompanyEmpWage> companyEmpWageList;
+        private Dictionary<string, CompanyEmpWage> companyToEmpWageMap;
 
         public EmpWageBuilder()
         {
             this.companyEmpWageList = new LinkedList<CompanyEmpWage>(); // Linkedlist object is created of type CompanyEmpWage 
+            this.companyToEmpWageMap = new Dictionary<string, CompanyEmpWage>(); //Dictionay class object created 
         }
         //addCompanyEmpWage method receive values for different parameters when method is called from Program.cs
         public void addCompanyEmpWage(string company, int empRatePerHour, int numOfWorkingDays, int maxHoursPerMonth)
@@ -23,6 +25,7 @@ namespace EmpWageComputationProblem
             //storing the received values of multiple parameters of multiple companies in companyEmpWage array
             CompanyEmpWage companyEmpWage = new CompanyEmpWage(company, empRatePerHour, numOfWorkingDays, maxHoursPerMonth);
             this.companyEmpWageList.AddLast(companyEmpWage); // adding the values at last node in linked list
+            this.companyToEmpWageMap.Add(company, companyEmpWage); // adding the key and value in dictionary
         }
         public void computeEmpWage() //this method is used to call setTotalEmpWage method to store the value of totalEmpWage of multiple company
         {
@@ -61,7 +64,10 @@ namespace EmpWageComputationProblem
             }
             return totalEmpWage;  
         }
-        
+        public int getTotalWage(string company)
+        {
+            return this.companyToEmpWageMap[company].totalEmpWage;
+        }
     }
 }
 
