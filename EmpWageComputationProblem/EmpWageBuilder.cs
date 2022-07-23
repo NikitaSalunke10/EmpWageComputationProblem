@@ -64,7 +64,7 @@ namespace EmpWageComputationProblem
             }
             return totalEmpWage;  
         }
-        public int getTotalWage(string company)
+        public int getTotalWage(string company) // this method is used to return the totalEmpWage of the given company name
         {
             return this.companyToEmpWageMap[company].totalEmpWage;
         }
